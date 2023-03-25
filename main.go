@@ -41,6 +41,10 @@ func run(url, out string) error {
 	ctx, cancel = context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
+	if err := chromedp.Run(ctx, chromedp.EmulateViewport(905, 705, chromedp.EmulateScale(1.5))); err != nil {
+		return err
+	}
+
 	selector := "readme-toc.content"
 	var buf []byte
 	if err := chromedp.Run(ctx, elementScreenshot(url, selector, &buf)); err != nil {
